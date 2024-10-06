@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import com.example.demo.model.Player;
 import com.example.demo.service.PlayerService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@Controller
+@RestController
 @RequestMapping("/player")
 public class PlayerController {
 
@@ -23,10 +24,11 @@ public class PlayerController {
     
     @GetMapping("/prueba")
     public String prueba() {
+        playerService.createPlayer("oscar", "prueba@gmail.com");
         return "hola";
     }
 
-    @GetMapping("/get/player")
+    @GetMapping("/player")
     @ResponseBody
     public Player getplayer(@RequestParam String nickName) {
         try {
@@ -37,13 +39,13 @@ public class PlayerController {
         return null;
     }
 
-    @GetMapping("/get/allplayers")
+    @GetMapping("/allplayers")
     @ResponseBody
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }
     
-    @GetMapping("/get/level")
+    @GetMapping("/level")
     public int getLevelPlayer(@RequestParam String nickName) {
         try {
             return playerService.getLevelPlayer(nickName);
@@ -62,7 +64,7 @@ public class PlayerController {
         }
     }
     
-    @GetMapping("/get/email")
+    @GetMapping("/email")
     public String getEmail(@RequestParam String nickName) {
         try {
             return playerService.getEmail(nickName);
@@ -72,7 +74,7 @@ public class PlayerController {
         return "Error";
     }
 
-    @GetMapping("/get/nicname")
+    @GetMapping("/nickname")
     public String getNickName(@RequestBody Player player) {
         return playerService.getNickName(player);
     }
@@ -89,6 +91,11 @@ public class PlayerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @PutMapping("/create/{nickname}")
+    public void createPlayer(@PathVariable String nickname, @RequestBody String email) {
+        playerService.createPlayer(nickname, email);
     }
 
 }

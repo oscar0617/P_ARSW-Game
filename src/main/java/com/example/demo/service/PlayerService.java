@@ -19,7 +19,7 @@ public class PlayerService {
         if(player.isPresent()){
             return player.get();
         }
-        throw new Exception("User not fodund");
+        throw new Exception("User not found");
     }
 
     public List<Player> getAllPlayers(){
@@ -58,9 +58,8 @@ public class PlayerService {
         playerRepository.save(player);
     } 
 
-    public Player createPlayer(String nickName, String email){
-        Player player = new Player(nickName, email, 0);
-        return player;
+    public void createPlayer(String nickName, String email){
+        playerRepository.save(new Player(nickName, email, 0));
     }
 
 }

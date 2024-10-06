@@ -18,10 +18,14 @@ public class Player{
     @Field
     int level;
 
+    @Field
+    int score;
+
     public Player(String nickName, String email, int level){
         this.nickName = nickName;
         this.email = email;
         this.level = level;
+        this.score = 0;
     }
 
     
